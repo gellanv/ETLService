@@ -42,15 +42,7 @@ namespace TaskOne
 
         public string CreateResultFileName ()
         {
-            DateTime dateTime = DateTime.Now;
-            string nameFolder = $"{dateTime.Month}-{dateTime.Day}-{dateTime.Year}";
-            string path = this.ResultFolder + "\\" + nameFolder;
-
-            var directory = new DirectoryInfo(path);
-            if (!directory.Exists)
-            {
-                directory.Create();
-            }
+            string path = CreateFolderIfNotExist();           
             int countExistFiles = Directory.GetFiles(path).Length;
             path = $"{path}\\output{(++countExistFiles).ToString()}.json";
 
@@ -73,6 +65,38 @@ namespace TaskOne
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        public void WriteMetaDataToFile(MetaData metaData)
+        {
+            string path = CreateFolderIfNotExist();
+            string pathMetaFile = path + "\\meta.log";
+            try
+            {
+                using (FileStream fs = File.Create(pathMetaFile))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(metaData.ToString());
+                    fs.Write(info, 0, info.Length);
+                }              
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private string CreateFolderIfNotExist()
+        {
+            DateTime dateTime = DateTime.Now;
+            string nameFolder = $"{dateTime.Month}-{dateTime.Day}-{dateTime.Year}";
+            string path = this.ResultFolder + "\\" + nameFolder;
+
+            var directory = new DirectoryInfo(path);
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+            return path;
         }
     }
 }
