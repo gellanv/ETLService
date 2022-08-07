@@ -7,8 +7,6 @@ namespace TaskOne
         public string SourceFolder { get; set; }
         public string ResultFolder { get; set; }
 
-        public string[] SearchFiles;
-
         public IEnumerable<List<string>> ReadFile(string path)
         {
             List<string> Lines = new List<string>();
@@ -40,9 +38,9 @@ namespace TaskOne
             }
         }
 
-        public string CreateResultFileName ()
+        public string CreateResultFileName()
         {
-            string path = CreateFolderIfNotExist();           
+            string path = CreateFolderIfNotExist();
             int countExistFiles = Directory.GetFiles(path).Length;
             path = $"{path}\\output{(++countExistFiles).ToString()}.json";
 
@@ -50,14 +48,14 @@ namespace TaskOne
         }
 
         public void WriteDataToFile(string pathOldFile, string pathNewFile, string jsonString)
-        {         
+        {
             try
             {
                 using (FileStream fs = File.Create(pathNewFile))
                 {
                     byte[] info = new UTF8Encoding(true).GetBytes(jsonString);
                     fs.Write(info, 0, info.Length);
-                }              
+                }
                 FileInfo fileInfo = new FileInfo(pathOldFile);
                 fileInfo.Delete();
             }
@@ -77,7 +75,7 @@ namespace TaskOne
                 {
                     byte[] info = new UTF8Encoding(true).GetBytes(metaData.ToString());
                     fs.Write(info, 0, info.Length);
-                }              
+                }
             }
             catch (Exception ex)
             {
