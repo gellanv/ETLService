@@ -12,7 +12,7 @@ namespace TaskOne
             while (!cancelTokenSource.Token.IsCancellationRequested)
             {
                 DateTime dateTime = DateTime.Now;
-                if (dateTime.Hour == 14 && dateTime.Minute == 04 && dateTime.Second == 01 && dateTime.Millisecond == 01)
+                if (dateTime.Hour == 23 && dateTime.Minute == 59 && dateTime.Second == 01 && dateTime.Millisecond == 01)
                 {
                     directoryWorkClass.WriteMetaDataToFile(metaData);
                 }
